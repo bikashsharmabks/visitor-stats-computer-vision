@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Booth Stats</title>
+    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,900,800italic,800,700italic,700,600italic,600,500italic,500,400italic,300italic,300,200italic,200,100italic,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/background.css">
+    <link rel="stylesheet" type="text/css" href="css/rotate-dial.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="/js/main.js"></script>
+</head>
+
+<body>
+    <div class="grid-wrapper">
+        <div class="grid">
+            <div class="vertical">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="horizontal">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 pl-5 pt-3">
+                <div id="date_time">
+                    <div id="date" class="semi_arc e4">
+                        <div class="semi_arc_2 e4_1">
+                            <div class="counterspin4"></div>
+                        </div>
+                        <div style="margin-top: 30px;"><span id="viewing" style="font-size: 50px;">0</span></div>
+                        <div style="font-size: 20px;">viewing</div>
+                    </div>
+                    <div id="time" class="arc e1">
+                        <div style="font-size: 45px; margin-left: 0px; margin-top: 15px;">0</div>
+                        <div style="font-size: 14px;margin-left: 5px;margin-top: -10px; display; inline;">crossing</div>
+                        <!-- <div style="font-size: 17px; margin-top: 10px;">Tuesday</div> -->
+                    </div>
+                </div>
+                <img id="videofield" class="video img-fluid" src="\video_feed?fd=true">
+            </div>
+            <div class="col-4 pt-3">
+                <div class="futurepanel">
+                    <p class="title" style="text-align: left; margin-left: 10px;">Visitors</p>
+                    <div class="px-2 pt-3">
+                        <div class="futuremetric futuremetric--circle">
+                            <div class="futuremetric__value futuremetric__value--optimal">24</div>
+                            <div class="futuremetric__label">Visits</div>
+                        </div>
+                        <div class="futuremetric futuremetric--circle">
+                            <div class="futuremetric__value futuremetric__value--warning">46</div>
+                            <div class="futuremetric__label">Crossed</div>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <p class="title" style="text-align: left; margin-left: 10px;">Trends <span style="font-size:12px">(Hourly)</span></p>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
