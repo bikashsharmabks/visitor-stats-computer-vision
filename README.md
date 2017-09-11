@@ -18,3 +18,5 @@
 
 #### Browser URL for viewing Visitor Stats
 [http://localhost:8080](http://localhost:8080)
+
+![Screenshot](https://raw.githubusercontent.com/bikashsharmabks/visitor-stats-computer-vision/master/www/image/screenshot.png)
