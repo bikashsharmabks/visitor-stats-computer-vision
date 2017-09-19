@@ -7,7 +7,13 @@
 
 #### Installing dependencies in mac os
 ```
->>bash script-mac
+>>brew install opencv
+>>brew install cmake
+>>brew install boost
+>>brew install boost-python
+>>sudo pip install --user face_recognition
+>>sudo pip install --user opencv-python
+>>sudo pip install --user tornado
 ```
 
 
