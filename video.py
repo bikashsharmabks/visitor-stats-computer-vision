@@ -64,13 +64,13 @@ class UsbCamera(object):
 
             if fdenable:
                 # resize image for speeding up recognize
-                frame = cv2.resize(image, (320, 240))
+                frame = cv2.resize(image, (640, 480))
             
                 face_locations = face_recognition.face_locations(frame)
                 face_encodings = face_recognition.face_encodings(frame, face_locations)
 
                  # draw rect on face arias
-                scale = float(self.w / 320.0)
+                scale = float(self.w / 640.0)
 
                 # Loop through each face in this frame of video
                 for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
