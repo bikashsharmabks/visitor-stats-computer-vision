@@ -104,6 +104,6 @@ $(document).ready(function() {
         ChangeRes(800, 600);
     })
 
-    ChangeRes(1366, 786);
+    ChangeRes(800, 600);
 
 });
