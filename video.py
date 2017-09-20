@@ -8,14 +8,15 @@ import tornado
 class UsbCamera(object):
 
     """ Init camera """
-    def __init__(self):
+    def __init__(self, camId):
 
         # Load a sample picture and learn how to recognize it.
         self.trained_image = face_recognition.load_image_file("training_image/steve.jpg")
         self.trained_face_encoding = face_recognition.face_encodings(self.trained_image)[0]
 
         # select first video device in system
-        self.cam =  cv2.VideoCapture(0)
+        print "Accessing camera @ " + str(camId)
+        self.cam =  cv2.VideoCapture(int(camId))
         
         # set camera resolution
         self.w = 800

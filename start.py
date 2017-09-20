@@ -7,6 +7,7 @@ import tornado.template
 import video
 import gen
 import os
+import sys
 
 
 cam = None
@@ -101,8 +102,14 @@ def make_app():
 
 
 if __name__ == "__main__":
+    arg = sys.argv
+    camId = 0
+    if (len(sys.argv) > 1):
+        camId = sys.argv[1]
+        pass
+
     # creates camera
-    cam = video.UsbCamera()
+    cam = video.UsbCamera(camId)
     # bind server on 8080 port
     sockets = tornado.netutil.bind_sockets(8080)
     server = tornado.httpserver.HTTPServer(make_app())
