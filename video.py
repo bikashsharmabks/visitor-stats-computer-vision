@@ -15,7 +15,7 @@ class UsbCamera(object):
         self.trained_face_encoding = face_recognition.face_encodings(self.trained_image)[0]
 
         # select first video device in system
-        print "Accessing camera @ " + str(camId)
+        print ("Accessing camera @ " + str(camId))
         self.cam =  cv2.VideoCapture(int(camId))
         
         # set camera resolution
@@ -97,7 +97,7 @@ class UsbCamera(object):
                     left =  int(left * scale)
 
                     # Draw a box around the face
-                    cv2.rectangle(image, (left, top), (right, bottom + 20), (255, 255, 255), 2)
+                    cv2.rectangle(image, (left, top), (right, bottom + 20), (0, 255, 0), 2)
 
                     if name:
                         # Draw a label with a name below the face
