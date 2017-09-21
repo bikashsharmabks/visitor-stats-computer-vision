@@ -17,6 +17,9 @@ class UsbCamera(object):
         # select first video device in system
         print ("Accessing camera @ " + str(camId))
         self.cam =  cv2.VideoCapture(int(camId))
+
+        isCamOpened = self.cam.isOpened()
+        print("Camera is opened: " + str(isCamOpened))
         
         # set camera resolution
         self.w = 800
