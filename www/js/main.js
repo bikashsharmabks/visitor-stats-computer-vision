@@ -42,6 +42,7 @@ $(document).ready(function() {
 
 
     var $viewing = $('#viewing');
+    var $visitors = $('#visitors');
     var host = window.location.host;
     var ws = new WebSocket('ws://' + host + '/ws');
     console.log(ws)
@@ -57,6 +58,12 @@ $(document).ready(function() {
             $viewing.fadeIn("slow");
             $viewing.text(data.viewing);
 
+            var pastVisitor = parseInt($visitors.text()) - data.viewing;
+
+            if (pastVisitor <= 0) {
+                $visitors.text(data.viewing);
+            }
+
             var lastViewing = trends.data[trends.data.length - 1];
             if (lastViewing !== data.viewing) {
 
@@ -68,6 +75,10 @@ $(document).ready(function() {
                 trends.labels.push(curDate.toLocaleTimeString());
                 trends.data.push(data.viewing);
                 chart.update();
+
+                $visitors.fadeIn("slow");
+                $visitors.text(pastVisitor + data.viewing);
+
             }
 
         }
@@ -92,18 +103,18 @@ $(document).ready(function() {
         xhr.send(data);
     }
 
-    $("#low").click(function() {
-        ChangeRes(320, 240);
-    })
+    // $("#low").click(function() {
+    //     ChangeRes(320, 240);
+    // })
 
-    $("#norm").click(function() {
-        ChangeRes(640, 480);
-    })
+    // $("#norm").click(function() {
+    //     ChangeRes(640, 480);
+    // })
 
-    $("#hi").click(function() {
-        ChangeRes(800, 600);
-    })
+    // $("#hi").click(function() {
+    //     ChangeRes(800, 600);
+    // })
 
-    ChangeRes(800, 600);
+    //ChangeRes(800, 600);
 
 });
