@@ -13,11 +13,11 @@ class UsbCamera(object):
         # Load a sample picture and learn how to recognize it.
         self.trained_image = face_recognition.load_image_file("training_image/steve.jpg")
         self.trained_face_encoding = face_recognition.face_encodings(self.trained_image)[0]
+        self.smileCascade = cv2.CascadeClassifier("haarcascade_smile.xml")
 
-       
         # initialize the HOG descriptor/person detector
-        self.hog = cv2.HOGDescriptor()
-        self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+        #self.hog = cv2.HOGDescriptor()
+        #self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
         # select first video device in system
         print ("Accessing camera @ " + str(camId))
@@ -38,6 +38,7 @@ class UsbCamera(object):
         # self.eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
         self.ws = None
         self.viewing = 0
+        self.smiling = 0
     
     def set_ws(self, ws):
         self.ws = ws
@@ -82,29 +83,6 @@ class UsbCamera(object):
                 # draw rect on face arias
                 scale = float(self.w / 640.0)
 
-                # # detect people in the image
-                # (rects, weights) = self.hog.detectMultiScale(frame, winStride=(4, 4),
-                #     padding=(8, 8), scale=1.05)
-             
-                # # draw the original bounding boxes
-                # for (x, y, w, h) in rects:
-                #     x =  int(x * scale)
-                #     y =  int(y * scale)
-                #     w =  int(w * scale)
-                #     h =  int(h * scale)
-                #     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-             
-                # # apply non-maxima suppression to the bounding boxes using a
-                # # fairly large overlap threshold to try to maintain overlapping
-                # # boxes that are still people
-                # rects = np.array([[x, y, x + w, y + h] for (x, y, w, h) in rects])
-                # pick = non_max_suppression(rects, probs=None, overlapThresh=0.65)
-             
-                # # draw the final bounding boxes
-                # for (xA, yA, xB, yB) in pick:
-                #     cv2.rectangle(image, (xA, yA), (xB, yB), (0, 255, 0), 2)
-
-
                 # Loop through each face in this frame of video
                 for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
                     
@@ -116,17 +94,34 @@ class UsbCamera(object):
                             self.viewing == viewing
                             self.ws.write_message({'viewing': viewing})
 
+                    top =  int(top * scale)
+                    right =  int(right * scale)
+                    bottom =  int(bottom * scale)
+                    left =  int(left * scale)
+
+                    # get the face image from
+                    face_image = image[top:bottom, left:right]
+                    # Set region of interest for smiles
+                    smile = self.smileCascade.detectMultiScale(face_image, scaleFactor= 1.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
+                    for (x, y, w, h) in smile:
+                        smiling = len(smile)
+                        
+                        if self.ws is not None:
+                            smiling = len(smile)
+                        
+                        if self.smiling != smiling:
+                            self.smiling == smiling
+                            self.ws.write_message({'smiling': smiling})
+
+                        print "Found", len(smile), "smiles!"
+                        cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
+
                     # See if the face is a match for the known face(s)
                     match = face_recognition.compare_faces([self.trained_face_encoding], face_encoding)
 
                     name = None
                     if match[0]:
                         name = "Steve Jobs"
-
-                    top =  int(top * scale)
-                    right =  int(right * scale)
-                    bottom =  int(bottom * scale)
-                    left =  int(left * scale)
 
                     # Draw a box around the face
                     cv2.rectangle(image, (left, top), (right, bottom + 20), (0, 255, 0), 2)

@@ -1,3 +1,9 @@
+.found-smile {
+  position: absolute;
+  right: 50px;
+  padding: 20px;
+  color: chartreuse;
+}
 
 .video {
     display: block;

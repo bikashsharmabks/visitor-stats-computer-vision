@@ -43,6 +43,7 @@ $(document).ready(function() {
 
     var $viewing = $('#viewing');
     var $visitors = $('#visitors');
+    var $foundSmiles = $('#foundSmiles');
     var host = window.location.host;
     var ws = new WebSocket('ws://' + host + '/ws');
     console.log(ws)
@@ -81,6 +82,14 @@ $(document).ready(function() {
 
             }
 
+        }
+
+        if (data.smiling) {
+            $foundSmiles.fadeIn('fast');
+            $foundSmiles.text("Nice Smile!!!");
+            $foundSmiles.delay(5000).fadeOut('slow', function() {
+                $foundSmiles.text("");
+            });
         }
 
     };
