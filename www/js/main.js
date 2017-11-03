@@ -40,7 +40,8 @@ $(document).ready(function() {
         }
     });
 
-
+    var pastVisitor = 0;
+    var snapShotTimeStamp = Date.now();
     var $viewing = $('#viewing');
     var $visitors = $('#visitors');
     var $foundSmiles = $('#foundSmiles');
@@ -56,15 +57,33 @@ $(document).ready(function() {
 
         var data = JSON.parse(ev.data);
         if (data.viewing) {
-            $viewing.fadeIn("slow");
+
+            //*********************************************
+            //currently viewing visitors
             $viewing.text(data.viewing);
+            //*********************************************
 
-            var pastVisitor = parseInt($visitors.text()) - data.viewing;
-
-            if (pastVisitor <= 0) {
-                $visitors.text(data.viewing);
+            //*********************************************
+            //total number of visit count
+            //HACK refresh the pastvistor every 30 seconds
+            if (Date.now() - snapShotTimeStamp > 30 * 1000) {
+                pastVisitor = parseInt($visitors.text());
+                snapShotTimeStamp = Date.now();
+            }
+            else {
+                pastVisitor = parseInt($visitors.text()) - data.viewing;
             }
 
+            if (pastVisitor < 0) {
+                pastVisitor = 0
+            }
+
+            $visitors.text(pastVisitor + data.viewing);
+            //*********************************************
+
+
+            //*********************************************
+            //Visitors trend chart
             var lastViewing = trends.data[trends.data.length - 1];
             if (lastViewing !== data.viewing) {
 
@@ -76,14 +95,13 @@ $(document).ready(function() {
                 trends.labels.push(curDate.toLocaleTimeString());
                 trends.data.push(data.viewing);
                 chart.update();
-
-                $visitors.fadeIn("slow");
-                $visitors.text(pastVisitor + data.viewing);
-
             }
+            //**********************************************
 
         }
 
+        //**************************************************
+        //Display Nice smile label
         if (data.smiling) {
             $foundSmiles.fadeIn('fast');
             $foundSmiles.text("Nice Smile!!!");
@@ -91,6 +109,7 @@ $(document).ready(function() {
                 $foundSmiles.text("");
             });
         }
+        //**************************************************
 
     };
     ws.onclose = function(ev) {};

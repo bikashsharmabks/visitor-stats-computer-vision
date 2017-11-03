@@ -112,8 +112,7 @@ class UsbCamera(object):
                         if self.smiling != smiling:
                             self.smiling == smiling
                             self.ws.write_message({'smiling': smiling})
-
-                        print "Found", len(smile), "smiles!"
+                        #print "Found", len(smile), "smiles!"
                         cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
 
                     # See if the face is a match for the known face(s)
