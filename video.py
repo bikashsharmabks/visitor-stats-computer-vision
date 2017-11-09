@@ -101,19 +101,21 @@ class UsbCamera(object):
 
                     # get the face image from
                     face_image = image[top:bottom, left:right]
+                    face_image = cv2.resize(face_image, (640, 480))
+
                     # Set region of interest for smiles
-                    smile = self.smileCascade.detectMultiScale(face_image, scaleFactor= 1.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
-                    for (x, y, w, h) in smile:
-                        smiling = len(smile)
+                    smiles = self.smileCascade.detectMultiScale(face_image, scaleFactor= 1.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
+                    for (x, y, w, h) in smiles:
+                        smiling = len(smiles)
                         
                         if self.ws is not None:
-                            smiling = len(smile)
+                            smiling = len(smiles)
                         
                         if self.smiling != smiling:
                             self.smiling == smiling
                             self.ws.write_message({'smiling': smiling})
                         #print "Found", len(smile), "smiles!"
-                        cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
+                        #cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
 
                     # See if the face is a match for the known face(s)
                     match = face_recognition.compare_faces([self.trained_face_encoding], face_encoding)
