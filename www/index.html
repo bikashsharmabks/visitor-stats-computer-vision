@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/background.css">
     <link rel="stylesheet" type="text/css" href="css/rotate-dial.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/smile.css">
     <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -72,7 +73,13 @@
                         <div style="font-size: 14px;margin-left: 5px;margin-top: -10px; display; inline;">smiles</div>
                     </div> -->
                     <div class="found-smile">
-                        <span id="foundSmiles" style="font-size: 36px;font-style: italic;"></span>
+                        <div id="foundSmiles" style="text-align: center;">
+                            <h4>Nice smile !!!</h4>
+                            <div id="smile">
+                              <div class="eye"></div>
+                              <div class="eye"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <img id="videofield" class="video img-fluid" src="\video_feed?fd=true">
@@ -91,6 +98,14 @@
                         </div> -->
                     </div>
                     <div class="pt-3">
+                        <p class="title" style="text-align: left; margin-left: 10px;margin-bottom: 5px;"> :) <span style="font-size:12px"></span></p>
+                       <div style="margin-top: 10px;">
+                            <img id="face1" height="110px" width="110px" style="margin: 5px">
+                            <img id="face2" height="110px" width="110px" style="margin: 5px">
+                            <img id="face3" height="110px" width="110px" style="margin: 5px">
+                       </div>
+                    </div>
+                    <div class="pt-2">
                         <p class="title" style="text-align: left; margin-left: 10px;">Trends <span style="font-size:12px"></span></p>
                         <canvas id="myChart"></canvas>
                     </div>

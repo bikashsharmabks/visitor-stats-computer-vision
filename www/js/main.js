@@ -45,6 +45,9 @@ $(document).ready(function() {
     var $viewing = $('#viewing');
     var $visitors = $('#visitors');
     var $foundSmiles = $('#foundSmiles');
+    $foundSmiles.fadeOut('fast');
+    var isSmiling = false;
+
     var host = window.location.host;
     var ws = new WebSocket('ws://' + host + '/ws');
     console.log(ws)
@@ -69,8 +72,7 @@ $(document).ready(function() {
             if (Date.now() - snapShotTimeStamp > 30 * 1000) {
                 pastVisitor = parseInt($visitors.text());
                 snapShotTimeStamp = Date.now();
-            }
-            else {
+            } else {
                 pastVisitor = parseInt($visitors.text()) - data.viewing;
             }
 
@@ -103,12 +105,22 @@ $(document).ready(function() {
         //**************************************************
         //Display Nice smile label
         if (data.smiling) {
-            $foundSmiles.fadeIn('fast');
-            $foundSmiles.text("Nice Smile!!!");
-            $foundSmiles.delay(5000).fadeOut('slow', function() {
-                $foundSmiles.text("");
-            });
+            if (!isSmiling) {
+                isSmiling = true;
+                $foundSmiles.fadeIn('fast');
+                $foundSmiles.delay(5000).fadeOut('slow', function(){
+                    isSmiling = false;
+                });
+            }
         }
+        //**************************************************
+
+        //**************************************************
+        //Display faces with smile
+        if (data.face) {
+            $("#face1").attr('src', 'data:image/png;base64,' + data.face);
+        }
+        
         //**************************************************
 
     };
