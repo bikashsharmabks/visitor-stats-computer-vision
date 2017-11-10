@@ -47,6 +47,7 @@ $(document).ready(function() {
     var $foundSmiles = $('#foundSmiles');
     $foundSmiles.fadeOut('fast');
     var isSmiling = false;
+    var faces = [];
 
     var host = window.location.host;
     var ws = new WebSocket('ws://' + host + '/ws');
@@ -118,7 +119,20 @@ $(document).ready(function() {
         //**************************************************
         //Display faces with smile
         if (data.face) {
-            $("#face1").attr('src', 'data:image/png;base64,' + data.face);
+            
+            if (faces.length == 3) {
+                faces.pop();
+                faces.push(data.face);
+            } else {
+                faces.push(data.face);
+            }
+
+            if (faces[0]) 
+                $("#face1").attr('src', 'data:image/png;base64,' + faces[0]);
+            if (faces[1])
+                $("#face2").attr('src', 'data:image/png;base64,' + faces[1]);
+            if (faces[2])
+                $("#face3").attr('src', 'data:image/png;base64,' + faces[2]);
         }
         
         //**************************************************
