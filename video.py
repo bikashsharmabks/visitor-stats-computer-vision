@@ -92,7 +92,7 @@ class UsbCamera(object):
                         viewing = len(face_locations)
                         
                         if self.viewing != viewing:
-                            self.viewing == viewing
+                            self.viewing = viewing
                             self.ws.write_message({'viewing': viewing})
 
                     top =  int(top * scale)
@@ -102,26 +102,25 @@ class UsbCamera(object):
 
                     # get the face image from
                     face_image = image[top:bottom, left:right]
-                    face_image = cv2.resize(face_image, (160, 120))
+                    face_image = cv2.resize(face_image, (320, 340))
 
                     # Set region of interest for smiles
-                    smiles = self.smileCascade.detectMultiScale(face_image, scaleFactor= 1.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
+                    #smiles = self.smileCascade.detectMultiScale(face_image, scaleFactor= 1.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
+                    smiles = self.smileCascade.detectMultiScale(face_image, scaleFactor= 2.7, minNeighbors=22, minSize=(25, 25), flags=cv2.CASCADE_SCALE_IMAGE)
+                    
                     for (x, y, w, h) in smiles:
-                        smiling = len(smiles)
-                        
                         if self.ws is not None:
                             smiling = len(smiles)
-                        
-                        if self.smiling != smiling:
-                            self.smiling == smiling
+                            #self.smiling = smiling
                             self.ws.write_message({'smiling': smiling})
-                            #face_jpeg = cv2.imencode('.jpg', face_image)
+                            # Draw a box around the face smile
+                            # cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
+
                             face_ret, face_png = cv2.imencode('.png',face_image)
                             face_b64 = base64.encodestring(face_png)
                             self.ws.write_message({'face': face_b64})
 
                         print "Found", len(smiles), "smiles!"
-                        #cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
 
                     # See if the face is a match for the known face(s)
                     match = face_recognition.compare_faces([self.trained_face_encoding], face_encoding)

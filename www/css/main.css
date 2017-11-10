@@ -5,6 +5,11 @@
   right: 0px;
 }
 
+.face-smile {
+  border: 1px solid #0f50c6 !important;
+  background-color: transparent !important;
+}
+
 .video {
     display: block;
     opacity: 0.5;

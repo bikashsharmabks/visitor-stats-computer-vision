@@ -109,7 +109,7 @@ $(document).ready(function() {
             if (!isSmiling) {
                 isSmiling = true;
                 $foundSmiles.fadeIn('fast');
-                $foundSmiles.delay(5000).fadeOut('slow', function(){
+                $foundSmiles.delay(5000).fadeOut('slow', function() {
                     isSmiling = false;
                 });
             }
@@ -119,22 +119,23 @@ $(document).ready(function() {
         //**************************************************
         //Display faces with smile
         if (data.face) {
-            
+
             if (faces.length == 3) {
                 faces.pop();
-                faces.push(data.face);
+                //faces.push(data.face);
+                faces.splice(0, 0, data.face);
             } else {
                 faces.push(data.face);
             }
 
-            if (faces[0]) 
+            if (faces[0])
                 $("#face1").attr('src', 'data:image/png;base64,' + faces[0]);
             if (faces[1])
                 $("#face2").attr('src', 'data:image/png;base64,' + faces[1]);
             if (faces[2])
                 $("#face3").attr('src', 'data:image/png;base64,' + faces[2]);
         }
-        
+
         //**************************************************
 
     };
