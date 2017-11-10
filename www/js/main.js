@@ -122,7 +122,7 @@ $(document).ready(function() {
 
             if (faces.length == 3) {
                 faces.pop();
-                //faces.push(data.face);
+                // place face on index 1 or on top
                 faces.splice(0, 0, data.face);
             } else {
                 faces.push(data.face);
@@ -133,7 +133,8 @@ $(document).ready(function() {
             if (faces[1])
                 $("#face2").attr('src', 'data:image/png;base64,' + faces[1]);
             if (faces[2])
-                $("#face3").attr('src', 'data:image/png;base64,' + faces[2]);
+                $("#face3").attr('src', 'data:image/png;base64,' + faces[2])
+
         }
 
         //**************************************************
