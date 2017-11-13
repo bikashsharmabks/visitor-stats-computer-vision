@@ -1,3 +1,10 @@
+.p10-logo {
+  position: absolute;
+  bottom: 10px;
+  left: 40px;
+  content: 'powered by'
+}
+
 .found-smile {
   position: absolute;
   padding: 20px;
@@ -8,6 +15,24 @@
 .face-smile {
   border: 1px solid #0f50c6 !important;
   background-color: transparent !important;
+}
+
+.qr-code {
+  border: 1px solid rgba(120, 200, 255, 0.4);
+  height: 6em;
+  width: 6em;
+  margin-top: 5px;
+  display: inline-block;
+  background-image: url(/image/qr-code.png);
+  background-size: 100%;
+}
+
+.qr-code-text {
+  text-transform: uppercase;
+  position: relative;
+  top: 5.5em;
+  padding-left: 3px;
+  padding-top: 10px;
 }
 
 .video {
@@ -51,7 +76,7 @@
 }
 
 .title {
-  font-size: 26px;
+  font-size: 20px;
   text-align: center;
   margin: 0;
   margin-top: 10px;
