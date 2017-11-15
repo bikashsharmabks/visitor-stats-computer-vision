@@ -84,16 +84,23 @@ class UsbCamera(object):
                 # draw rect on face arias
                 scale = float(self.w / 640.0)
 
+                viewing = len(face_locations)
+                if viewing == 0 and self.viewing != viewing:
+                    self.viewing = viewing
+                    #print "faces", self.viewing
+                    self.ws.write_message({'viewing': self.viewing})
+
                 # Loop through each face in this frame of video
                 for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
                     
 
                     if self.ws is not None:
                         viewing = len(face_locations)
-                        
+
                         if self.viewing != viewing:
                             self.viewing = viewing
-                            self.ws.write_message({'viewing': viewing})
+                            #print "faces", self.viewing
+                            self.ws.write_message({'viewing': self.viewing})
 
                     top =  int(top * scale)
                     right =  int(right * scale)
@@ -111,16 +118,13 @@ class UsbCamera(object):
                     for (x, y, w, h) in smiles:
                         if self.ws is not None:
                             smiling = len(smiles)
-                            #self.smiling = smiling
                             self.ws.write_message({'smiling': smiling})
-                            # Draw a box around the face smile
-                            # cv2.rectangle(face_image, (x, y), (x+w, y+h), (255, 255, 255), 1)
-
+                          
                             face_ret, face_png = cv2.imencode('.png',face_image)
                             face_b64 = base64.encodestring(face_png)
                             self.ws.write_message({'face': face_b64})
 
-                        print "Found", len(smiles), "smiles!"
+                        print "Found", smiling, "smiles!"
 
                     # See if the face is a match for the known face(s)
                     match = face_recognition.compare_faces([self.trained_face_encoding], face_encoding)

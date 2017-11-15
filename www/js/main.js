@@ -14,7 +14,7 @@ $(document).ready(function() {
             labels: trends.labels,
             datasets: [{
                 label: "Traffic",
-                backgroundColor: 'rgba(0, 155, 202, 0.5)',
+                backgroundColor: 'rgba(15, 80, 198, 0.5)',
                 borderColor: '#009bca',
                 data: trends.data
             }]
@@ -40,11 +40,28 @@ $(document).ready(function() {
         }
     });
 
-    var pastVisitor = 0;
+    
     var snapShotTimeStamp = Date.now();
-    var $viewing = $('#viewing');
-    var $visitors = $('#visitors');
     var $foundSmiles = $('#foundSmiles');
+    var $viewing = $('#viewing');
+    var $titleButton = $('#titleButton');
+
+    var $visitors = $('#visitors');
+    var pastVisitor;
+    pastVisitor = parseInt(window.localStorage.getItem('pastVisitor'));
+    
+    if (isNaN(pastVisitor)) {
+        pastVisitor = 0;
+    }
+    $visitors.text(pastVisitor);
+
+    $titleButton.click(function() {
+        pastVisitor = 1;
+        window.localStorage.setItem('pastVisitor', pastVisitor);
+        $visitors.text(pastVisitor);
+    });
+    
+    
     $foundSmiles.fadeOut('fast');
     var isSmiling = false;
     var faces = [];
@@ -60,7 +77,7 @@ $(document).ready(function() {
     ws.onmessage = function(ev) {
 
         var data = JSON.parse(ev.data);
-        if (data.viewing) {
+        if (data.viewing >=0) {
 
             //*********************************************
             //currently viewing visitors
@@ -69,19 +86,19 @@ $(document).ready(function() {
 
             //*********************************************
             //total number of visit count
-            //HACK refresh the pastvistor every 30 seconds
-            if (Date.now() - snapShotTimeStamp > 30 * 1000) {
+            //HACK refresh the pastvistor every 20 seconds
+            pastVisitor = parseInt($visitors.text());
+
+            if (Date.now() - snapShotTimeStamp > 20 * 1000) {
                 pastVisitor = parseInt($visitors.text());
                 snapShotTimeStamp = Date.now();
-            } else {
+            }  else {
                 pastVisitor = parseInt($visitors.text()) - data.viewing;
             }
 
-            if (pastVisitor < 0) {
-                pastVisitor = 0
-            }
-
-            $visitors.text(pastVisitor + data.viewing);
+            var visitors = pastVisitor + data.viewing;
+            window.localStorage.setItem('pastVisitor', visitors);
+            $visitors.text(visitors);
             //*********************************************
 
 
