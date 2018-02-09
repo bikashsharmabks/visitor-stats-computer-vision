@@ -28,8 +28,8 @@ class UsbCamera(object):
         print("Camera is opened: " + str(isCamOpened))
         
         # set camera resolution
-        self.w = 800
-        self.h = 600
+        self.w = 1024
+        self.h = 786
         
         # set crop factor
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, self.h)
